@@ -1,0 +1,61 @@
+{
+  "nodes": {
+    "dotool": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1675683601,
+        "narHash": "sha256-HWJo9cYOkAXZtqrAUKM4o9Ix46KH9HCbB4eiWnky1x4=",
+        "owner": "~geb",
+        "repo": "dotool",
+        "rev": "bc16ae7fe096324ed96e1b16c766198abd3d687d",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~geb",
+        "repo": "dotool",
+        "type": "sourcehut"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1676718858,
+        "narHash": "sha256-giQecvcifVLNHCC9lMfTGP09tNxXhOMw+d/aql7MhRw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e6d5772f3515b8518d50122471381feae7cbae36",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "numen": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1676719568,
+        "narHash": "sha256-hzaskcoc1pgakl8chlawCqWvF4+3lGQV4ZTvlmaH0aU=",
+        "owner": "~geb",
+        "repo": "numen",
+        "rev": "bd9febd512ad7c9f85cde467b68462556c3deaba",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~geb",
+        "repo": "numen",
+        "type": "sourcehut"
+      }
+    },
+    "root": {
+      "inputs": {
+        "dotool": "dotool",
+        "nixpkgs": "nixpkgs",
+        "numen": "numen"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
