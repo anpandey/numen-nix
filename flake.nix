@@ -36,8 +36,8 @@
             '';
           };
           vosk-model-small-en-us = pkgs.stdenv.mkDerivation {
-            name = "vosk-model-en-us-small";
-            version = "small-en-us";
+            name = "vosk-model-small-en-us";
+            version = "0.15";
             src = fetchurl {
               url = "https://alphacephei.com/kaldi/models/vosk-model-small-en-us-0.15.zip";
               sha256 = "sha256-MPJiQsTrRJ+UjkLLMC3XpobLKaNCOoNn+Z/0F4CUJJg=";
@@ -70,10 +70,6 @@
             makeWrapper
             alsa-utils
             scdoc
-          ];
-          propagatedBuildInputs = [
-            dotoolPkg
-            mawk
           ];
           patchPhase = ''
             substituteInPlace phrases/* \
