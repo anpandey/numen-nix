@@ -46,21 +46,23 @@
             unpackCmd = "unzip $curSrc";
 
             installPhase = ''
-              mkdir -p $out/usr/local/share/vosk-models
-              cp -r . $out/usr/local/share/vosk-models/small-en-us
+              mkdir -p $out/usr/share/vosk-models
+              cp -r . $out/usr/share/vosk-models/small-en-us
             '';
           };
           dotoolPkg = pkgs.buildGo119Module rec {
             pname = "dotool";
-            version = "1.2";
+            version = "1.3";
             vendorSha256 = "sha256-v0uoG9mNaemzhQAiG85RequGjkSllPd4UK2SrLjfm7A=";
             src = dotool;
+            nativeBuildInputs = [ pkg-config ];
+            buildInputs = [ libxkbcommon ];
           };
       in
         pkgs.buildGo119Module rec {
           pname = "numen";
-          version = "0.6";
-          vendorSha256 = "sha256-URfqf341AdnPA5hvcy/k1icjzRcjzLtU/84mP+3SQ7M=";
+          version = "0.7";
+          vendorSha256 = "sha256-Y3CbAnIK+gEcUfll9IlEGZE/s3wxdhAmTJkj9zlAtoQ=";
           src = numen;
           preBuild = ''
               export CGO_CFLAGS="-I${vosk-bin}/include"
@@ -71,38 +73,28 @@
             alsa-utils
             scdoc
           ];
-          patchPhase = ''
-            substituteInPlace phrases/* \
-              --replace /usr/libexec/numen "$out/usr/libexec/numen"
-            substituteInPlace phrasescripts/* \
-              --replace /usr/libexec/numen "$out/usr/libexec/numen"
-          '';
+          ldflags = [
+            "-X 'main.Version=$version'"
+            "-X 'main.DefaultModelPackage=vosk-model-small-en-us'"
+            "-X 'main.DefaultModelPaths=${vosk-model-small-en-us}/usr/share/vosk-models/small-en-us'"
+            "-X 'main.DefaultPhrasesDir=$out/etc/numen/phrases'"
+          ];
           installPhase = ''
               runHook preInstall
 
-              mv $GOPATH/bin/numen ./speech
-              export PACKAGING=TRUE
+              install -Dm755 $GOPATH/bin/numen -t $out/bin
+              export NUMEN_SKIP_BINARY=yes
+              export NUMEN_SKIP_CHECKS=yes
+              export NUMEN_DEFAULT_PHRASES_DIR=$out/etc/numen/phrases
+              export NUMEN_SCRIPTS_DIR=$out/etc/numen/scripts
               ./install-numen.sh $out $out/bin
-
-              substituteInPlace $out/usr/libexec/numen/numen \
-                --replace /usr/libexec/numen "$out/usr/libexec/numen"
-              substituteInPlace $out/usr/libexec/numen/numen \
-                --replace /etc/numen "$out/etc/numen"
-              substituteInPlace $out/usr/libexec/numen/scribe \
-                --replace /usr/libexec/numen/awk "$out/usr/libexec/numen/awk"
-              substituteInPlace $out/usr/libexec/numen/instructor \
-                --replace /usr/libexec/numen/awk "$out/usr/libexec/numen/awk"
-
-              mkdir -p $out/bin
-              ln -s $out/usr/libexec/numen/numen $out/bin/numen
 
               runHook postInstall
             '';
           postFixup = ''
-              wrapProgram $out/usr/libexec/numen/numen \
+              wrapProgram $out/bin/numen \
                 --prefix PATH : ${lib.makeBinPath [ dotoolPkg ]} \
-                --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ stdenv.cc.cc.lib ]} \
-                --set NUMEN_MODEL ${vosk-model-small-en-us}/usr/local/share/vosk-models/small-en-us
+                --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.libxkbcommon stdenv.cc.cc.lib ]} \
             '';
         };
   };
