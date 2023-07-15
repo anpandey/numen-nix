@@ -78,6 +78,15 @@
             "-X main.DefaultModelPaths=${vosk-model-small-en-us}/usr/share/vosk-models/small-en-us"
             "-X main.DefaultPhrasesDir=${placeholder "out"}/etc/numen/phrases"
           ];
+          # This is necessary because while the scripts are copied relative to
+          # the nix store, the hard-coded paths inside the scripts themselves
+          # still point outside of the store.
+          patchPhase = ''
+            substituteInPlace scripts/* \
+              --replace /etc/numen/scripts "$out/etc/numen/scripts"
+            substituteInPlace phrases/* \
+              --replace /etc/numen/scripts "$out/etc/numen/scripts"
+          '';
           installPhase = ''
               runHook preInstall
 
