@@ -85,7 +85,10 @@
             substituteInPlace scripts/* \
               --replace /etc/numen/scripts "$out/etc/numen/scripts"
             substituteInPlace phrases/* \
-              --replace /etc/numen/scripts "$out/etc/numen/scripts"
+              --replace /etc/numen/scripts "$out/etc/numen/scripts" \
+              --replace numenc "$out/bin/numenc"
+            substituteInPlace numenc \
+              --replace /bin/echo "${coreutils}/bin/echo" \
           '';
           installPhase = ''
               runHook preInstall
@@ -95,7 +98,7 @@
               export NUMEN_SKIP_CHECKS=yes
               export NUMEN_DEFAULT_PHRASES_DIR=/etc/numen/phrases
               export NUMEN_SCRIPTS_DIR=/etc/numen/scripts
-              ./install-numen.sh $out $out/bin
+              ./install-numen.sh $out /bin
 
               runHook postInstall
             '';
