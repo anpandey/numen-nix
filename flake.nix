@@ -83,12 +83,22 @@
           # still point outside of the store.
           patchPhase = ''
             substituteInPlace scripts/* \
-              --replace /etc/numen/scripts "$out/etc/numen/scripts"
+              --replace /etc/numen/scripts "$out/etc/numen/scripts" \
+              --replace sed ${gnused}/bin/sed \
+              --replace awk ${gawk}/bin/awk \
+              --replace cat ${coreutils}/bin/cat \
+              --replace notify-send ${libnotify}/bin/notify-send
+            substituteInPlace scripts/menu \
+              --replace "-dmenu" "-${dmenu}/bin/dmenu"
+            substituteInPlace scripts/displaying \
+              --replace "(pgrep" "(${procps}/bin/pgrep" \
+              --replace "(ps" "(${procps}/bin/ps"
             substituteInPlace phrases/* \
               --replace /etc/numen/scripts "$out/etc/numen/scripts" \
               --replace numenc "$out/bin/numenc"
             substituteInPlace numenc \
               --replace /bin/echo "${coreutils}/bin/echo" \
+              --replace cat "${coreutils}/bin/cat" \
           '';
           installPhase = ''
               runHook preInstall
