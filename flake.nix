@@ -30,6 +30,12 @@
         inherit vosk-bin vosk-model-small-en-us dotool numen;
         default = numen;
       };
+      overlays.default = final: prev: {
+        inherit vosk-bin vosk-model-small-en-us dotool numen;
+
+      };
+      homeManagerModules.numen-nix = (import ./modules/home-manager/numen-nix.nix) { inherit numen vosk-model-small-en-us; };
+      homeManagerModule = self.homeManagerModules.numen-nix;
       formatter.x86_64-linux = pkgs.nixpkgs-fmt;
     };
 }
