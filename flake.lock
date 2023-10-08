@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "dotool": {
+    "dotool-src": {
       "flake": false,
       "locked": {
         "lastModified": 1685633694,
@@ -32,7 +32,7 @@
         "type": "github"
       }
     },
-    "numen": {
+    "numen-src": {
       "flake": false,
       "locked": {
         "lastModified": 1687545106,
@@ -50,9 +50,9 @@
     },
     "root": {
       "inputs": {
-        "dotool": "dotool",
+        "dotool-src": "dotool-src",
         "nixpkgs": "nixpkgs",
-        "numen": "numen"
+        "numen-src": "numen-src"
       }
     }
   },
