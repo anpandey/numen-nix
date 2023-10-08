@@ -30,5 +30,6 @@
         inherit vosk-bin vosk-model-small-en-us dotool numen;
         default = numen;
       };
+      formatter.x86_64-linux = pkgs.nixpkgs-fmt;
     };
 }
