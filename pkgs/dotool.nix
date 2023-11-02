@@ -6,4 +6,7 @@ buildGo119Module rec {
   src = dotool-src;
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ libxkbcommon ];
+  postInstall = ''
+    install -D $src/80-dotool.rules $out/lib/udev/rules.d/80-dotool.rules
+  '';
 }
