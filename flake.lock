@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "dotool-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1685633694,
-        "narHash": "sha256-z0fQ+qenHjtoriYSD2sOjEvfLVtZcMJbvnjKZFRSsMA=",
-        "owner": "~geb",
-        "repo": "dotool",
-        "rev": "eb41d9d70cf96d36a008313704933238f1e88f84",
-        "type": "sourcehut"
-      },
-      "original": {
-        "owner": "~geb",
-        "repo": "dotool",
-        "type": "sourcehut"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1689885880,
@@ -32,27 +16,9 @@
         "type": "github"
       }
     },
-    "numen-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1687545106,
-        "narHash": "sha256-hBtNubasdPlvrUuX5+wxZXrfbCy5cBIauxuKMMXljmY=",
-        "owner": "~geb",
-        "repo": "numen",
-        "rev": "80eaf6cef677a9353d29ad7d663885406404c3c3",
-        "type": "sourcehut"
-      },
-      "original": {
-        "owner": "~geb",
-        "repo": "numen",
-        "type": "sourcehut"
-      }
-    },
     "root": {
       "inputs": {
-        "dotool-src": "dotool-src",
-        "nixpkgs": "nixpkgs",
-        "numen-src": "numen-src"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

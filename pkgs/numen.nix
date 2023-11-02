@@ -1,4 +1,4 @@
-{ numen-src
+{ fetchFromSourcehut
 , stdenv
 , buildGo119Module
 , makeWrapper
@@ -19,8 +19,13 @@
 buildGo119Module rec {
   pname = "numen";
   version = "0.7";
+  src = fetchFromSourcehut {
+    owner = "~geb";
+    repo = pname;
+    rev = version;
+    hash = "sha256-ia01lOP59RdoiO23b5Dv5/fX5CEI43tPHjmaKwxP+OM=";
+  };
   vendorSha256 = "sha256-Y3CbAnIK+gEcUfll9IlEGZE/s3wxdhAmTJkj9zlAtoQ=";
-  src = numen-src;
   preBuild = ''
     export CGO_CFLAGS="-I${vosk-bin}/include"
     export CGO_LDFLAGS="-L${vosk-bin}/lib"
